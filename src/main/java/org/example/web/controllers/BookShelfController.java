@@ -1,6 +1,6 @@
 package org.example.web.controllers;
 
-//import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
 import org.example.web.dto.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/books")
 public class BookShelfController {
 	
-	//private Logger logger =Logger.getLogger(BookShelfController.class);
+	private Logger logger =Logger.getLogger(BookShelfController.class);
 	private BookService bookService;	
 	
 	@Autowired
@@ -25,7 +25,7 @@ public class BookShelfController {
 
 	@GetMapping("/shelf")
 	public String books(Model model) {
-		//logger.info("got book shelf");
+		logger.info("got book shelf");
 		model.addAttribute("book", new Book());
 		model.addAttribute("bookList", bookService.getAllBooks());
 		return "book_shelf";
@@ -34,7 +34,7 @@ public class BookShelfController {
 	@PostMapping("/save")
 	public String saveBook(Book book) {
 		bookService.saveBook(book);
-		//logger.info("current repository size: " + bookService.getAllBooks().size());
+		logger.info("current repository size: " + bookService.getAllBooks().size());
 		return "redirect:/books/shelf";
 	}
 	@PostMapping("/remove")
@@ -42,7 +42,6 @@ public class BookShelfController {
 		if(bookService.removeBookById(bookIdToRemove)) {
 			return "redirect:/books/shelf";
 		} else {
-			//return "book_shelf";
 			return "redirect:/books/shelf";
 		}		
 	}

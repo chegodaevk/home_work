@@ -20,7 +20,7 @@ public class BookRepository implements ProjectRepository<Book> {
 
 	@Override
 	public void store(Book book) {
-		if(book.getSize()!=null || book.getAuthor()!="" || book.getTitle()!="") {
+		if(book.getSize()!=null || !book.getAuthor().equals("") || !book.getTitle().equals("")) {
 			book.setId(book.hashCode());
 			logger.info("store new book: " + book);
 			repo.add(book);		
@@ -34,14 +34,14 @@ public class BookRepository implements ProjectRepository<Book> {
 				logger.info("remove book completed: " + book);
 				return repo.remove(book);
 			}			
-		}
+		} 
 		return false;
 	}
 
 	@Override
 	public void deleteData(String dataOfBook) {
 		for(Book book : retreiveAll()) {
-			if(dataOfBook != "" && (book.getAuthor().equals(dataOfBook) || book.getTitle().equals(dataOfBook))) {
+			if(!dataOfBook.equals("") && (book.getAuthor().equals(dataOfBook) || book.getTitle().equals(dataOfBook))) {
 				repo.remove(book);				
 			}
 		}
